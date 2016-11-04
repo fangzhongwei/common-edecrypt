@@ -1,10 +1,5 @@
 package com.lawsofnature.common.edecrypt;
 
-/**
- * author: fangzw
- * date: 13-5-8
- * time: 上午8:59
- */
 public class HexUtils {
     private static final int[] HEX_CHARACTER_TO_DECIMAL_NUMBER_MAPPING_TABLE = {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -49,9 +44,6 @@ public class HexUtils {
             "FA", "FB", "FC", "FD", "FE", "FF"
     };
 
-    /**
-     * 将byte数组转换为表示16进制值的字符串
-     */
     public static String byteArray2HexStr(byte[] bytes) {
         StringBuilder buffer = new StringBuilder();
 
@@ -66,14 +58,10 @@ public class HexUtils {
         return buffer.toString();
     }
 
-    /**
-     * 将表示16进制值的字符串转换为byte数组
-     */
     public static byte[] hexStr2ByteArray(String strIn) {
         byte[] arrB = strIn.getBytes();
         int iLen = arrB.length;
 
-        // 两个字符表示一个字节，所以字节数组长度是字符串长度除以2
         byte[] arrOut = new byte[iLen / 2];
         for (int i = 0; i < iLen; i = i + 2) {
 

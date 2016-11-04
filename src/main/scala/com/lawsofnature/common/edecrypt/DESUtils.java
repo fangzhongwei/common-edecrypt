@@ -1,19 +1,13 @@
 package com.lawsofnature.common.edecrypt;
 
-/**
- * Created by fangzhongwei on 2016/11/4.
- */
 
 import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
 /**
- * 字符串工具集合
- *
- * @author Liudong
+ * Created by fangzhongwei on 2016/11/4.
  */
 public class DESUtils {
     private static final String ALGORITHM_PADDING = "DES/CBC/PKCS5Padding";
