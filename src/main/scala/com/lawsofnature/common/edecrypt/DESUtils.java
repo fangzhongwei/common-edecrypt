@@ -19,7 +19,6 @@ public class DESUtils {
     private static final String ALGORITHM_PADDING = "DES/CBC/PKCS5Padding";
     private static final String SYS_CHARSET = "UTF-8";
     private static final String INSTANCE_NAME = "DES";
-    private static final String PASSWORD_CRYPT_KEY = "12345678";
 
     public static String decrypt(String message, String key) throws Exception {
         Cipher cipher = Cipher.getInstance(ALGORITHM_PADDING);
