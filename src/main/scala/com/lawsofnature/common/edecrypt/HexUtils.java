@@ -1,6 +1,10 @@
 package com.lawsofnature.common.edecrypt;
 
+import java.io.UnsupportedEncodingException;
+
 public class HexUtils {
+    private static final String DEFAULT_CHARSET_NAME = "UTF-8";
+
     private static final int[] HEX_CHARACTER_TO_DECIMAL_NUMBER_MAPPING_TABLE = {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -45,33 +49,28 @@ public class HexUtils {
     };
 
     public static String byteArray2HexStr(byte[] bytes) {
-        StringBuilder buffer = new StringBuilder();
-
+        final StringBuilder builder = new StringBuilder();
         final int len = bytes.length;
+        int b;
         for (int i = 0; i < len; i++) {
-            int b = bytes[i] & 0xff;
-            if (b <= 0xf) buffer.append("0");
-
-            buffer.append(DECIMAL_NUMBER_TO_HEX_MAPPING_TABLE[b]);
+            b = bytes[i] & 0xff;
+            if (b <= 0xf) builder.append("0");
+            builder.append(DECIMAL_NUMBER_TO_HEX_MAPPING_TABLE[b]);
         }
-
-        return buffer.toString();
+        return builder.toString();
     }
 
-    public static byte[] hexStr2ByteArray(String strIn) {
-        byte[] arrB = strIn.getBytes();
-        int iLen = arrB.length;
-
-        byte[] arrOut = new byte[iLen / 2];
+    public static byte[] hexStr2ByteArray(String strIn) throws UnsupportedEncodingException {
+        final byte[] arrB = strIn.getBytes(DEFAULT_CHARSET_NAME);
+        final int iLen = arrB.length;
+        final byte[] arrOut = new byte[iLen / 2];
+        int t1;
+        int t2;
         for (int i = 0; i < iLen; i = i + 2) {
-
-            int t1 = HEX_CHARACTER_TO_DECIMAL_NUMBER_MAPPING_TABLE[arrB[i]];
-            int t2 = HEX_CHARACTER_TO_DECIMAL_NUMBER_MAPPING_TABLE[arrB[i + 1]];
-
+            t1 = HEX_CHARACTER_TO_DECIMAL_NUMBER_MAPPING_TABLE[arrB[i]];
+            t2 = HEX_CHARACTER_TO_DECIMAL_NUMBER_MAPPING_TABLE[arrB[i + 1]];
             arrOut[i / 2] = (byte) (t1 * 16 + t2);
-
         }
-
         return arrOut;
     }
 }
