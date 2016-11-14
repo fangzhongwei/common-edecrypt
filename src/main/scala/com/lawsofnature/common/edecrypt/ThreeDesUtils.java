@@ -56,26 +56,4 @@ public class ThreeDesUtils {
         c1.init(Cipher.DECRYPT_MODE, deskey);
         return c1.doFinal(src);
     }
-
-
-    public static void main(String[] args) throws Exception {
-        String key = "ABCD1234";
-        String raw = "password";
-
-        String en;
-        String rn;
-
-        for (int i = 0; i < 100; i++) {
-            final long startTime = System.currentTimeMillis();
-            en = encrypt3DES(raw, key);
-            System.out.println("加密耗时:" + (System.currentTimeMillis() - startTime));
-            System.out.println(en);
-            final long startTime2 = System.currentTimeMillis();
-            rn = decrypt3DES(en, key);
-            System.out.println("解密耗时:" + (System.currentTimeMillis() - startTime2));
-            System.out.println(rn);
-
-        }
-
-    }
 }
