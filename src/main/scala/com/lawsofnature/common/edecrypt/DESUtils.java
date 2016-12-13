@@ -17,7 +17,7 @@ public class DESUtils {
     public static String decrypt(String message, String key) throws Exception {
         Cipher cipher = Cipher.getInstance(ALGORITHM_PADDING);
         cipher.init(Cipher.DECRYPT_MODE, SecretKeyFactory.getInstance(INSTANCE_NAME).generateSecret(new DESKeySpec(key.getBytes(SYS_CHARSET))), new IvParameterSpec(key.getBytes(SYS_CHARSET)));
-        return new String(cipher.doFinal(HexUtils.hexStr2ByteArray(message)));
+        return new String(cipher.doFinal(HexUtils.hexStr2ByteArray(message)), SYS_CHARSET);
     }
 
     public static String encrypt(String message, String key) throws Exception {
@@ -26,15 +26,15 @@ public class DESUtils {
         return HexUtils.byteArray2HexStr(cipher.doFinal(message.getBytes(SYS_CHARSET)));
     }
 
-    public static String decrypt(byte[] data, String key) throws Exception {
+    public static byte[] decrypt(byte[] data, String key) throws Exception {
         Cipher cipher = Cipher.getInstance(ALGORITHM_PADDING);
         cipher.init(Cipher.DECRYPT_MODE, SecretKeyFactory.getInstance(INSTANCE_NAME).generateSecret(new DESKeySpec(key.getBytes(SYS_CHARSET))), new IvParameterSpec(key.getBytes(SYS_CHARSET)));
-        return new String(cipher.doFinal(data));
+        return cipher.doFinal(data);
     }
 
-    public static String encrypt(byte[] data, String key) throws Exception {
+    public static byte[] encrypt(byte[] data, String key) throws Exception {
         Cipher cipher = Cipher.getInstance(ALGORITHM_PADDING);
         cipher.init(Cipher.ENCRYPT_MODE, SecretKeyFactory.getInstance(INSTANCE_NAME).generateSecret(new DESKeySpec(key.getBytes(SYS_CHARSET))), new IvParameterSpec(key.getBytes(SYS_CHARSET)));
-        return HexUtils.byteArray2HexStr(cipher.doFinal(data));
+        return cipher.doFinal(data);
     }
 }
