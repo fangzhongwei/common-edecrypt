@@ -1,4 +1,4 @@
-package com.lawsofnature.common.edecrypt.rsa;
+package com.jxjxgo.common.edecrypt.rsa;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;

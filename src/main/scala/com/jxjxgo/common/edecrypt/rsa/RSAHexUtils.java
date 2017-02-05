@@ -1,4 +1,6 @@
-package com.lawsofnature.common.edecrypt.rsa;
+package com.jxjxgo.common.edecrypt.rsa;
+
+import com.jxjxgo.common.edecrypt.HexUtils;
 
 import javax.crypto.Cipher;
 import java.security.*;
@@ -13,15 +15,17 @@ import java.util.Map;
  * @author fangzhongwei
  * @since 2015/7/28.
  */
-public abstract class RSABase64Utils extends Coder {
+public abstract class RSAHexUtils {
     public static final String KEY_ALGORITHM = "RSA";
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
+    public static final String SYSTEM_CHARSET = "UTF-8";
+
     //private static String PUBLIC_KEY = "publicKey";
     //private static String PRIVATE_KEY = "privateKey";
-    
-    public static final String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDv0rdsn5FYPn0EjsCPqDyIsYRawNWGJDRHJBcdCldodjM5bpve+XYb4Rgm36F6iDjxDbEQbp/HhVPj0XgGlCRKpbluyJJt8ga5qkqIhWoOd/Cma1fCtviMUep21hIlg1ZFcWKgHQoGoNX7xMT8/0bEsldaKdwxOlv3qGxWfqNV5QIDAQAB";
-    public static final String PRIVATE_KEY = "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAOUDkSlpaaMpPaI7TiHTBUrv3V31IWtMBvlaKK2o8cF68ZKu03E+EKGQNgfTeejGfvGpuvdd20g4ltDBNZlCR0KVhhKJjh7VsjY8RiaF7yoW/IaiJeVdIXVfW+5Zv2Y/Yb1TmfrokTG4/NnVqpY+KzfZs+2PAXyctp5baKQFKHsrAgMBAAECgYAPBN7eQmWFJ808+Hq1SSuNsJFp+guJB+FlNP559Rx1veRd5E1FnfZlQhnpBXt3Qp1Mp/70/hjFccCiTCmBtZEKswyf1vfzugNJ88+FMOUvwjGwTWEmYiOLrBcyzEzr3QUYeBtfPrt7GTEP9mJoO/uaT37XKbqQnn5GEJB3rS7YEQJBAP2ccCCvqgqjmAA9IM2pxlGC8BkDA3y9wQkx+a/wm1PIWXp5tMyB1p7tZLb6297HwQiydRrV6NwsUfxfqcwB0j0CQQDnK9Cnioz6ShBKexWoZ6ipofEgVrdFpm0AlIUSp5c5NjBu/rgbLtCjZvIdeSHAAj2SKIEds5juOyp9YVqdx+GHAkEAzxTS9c2aMg+8yM0hIO208s/QzwuH6G5k1eZJtCDqI/JfJcOFHswR/DlpWIPjzrga5cgaGOx7tHQ4CbPvSJZgHQJBAJMAdsgDwBBtRpzGVohnmoZ8d4Q0AIlnAovK5jBtqCl2fygmDFck1wIBtdbuL3sVMage37ROf+KGd0eRv/jzoUMCQQDw7OOyfemmRGFazNSHQDUBBnJrHhyKUFmB3xtMWlh0ooCg7cdZ1GsANUONC2WHM+cdR27d+kYrpN3uxaAU8fv+";
+
+    public static final String PUBLIC_KEY = "30819F300D06092A864886F70D010101050003818D0030818902818100CCD76686077243850EF52548BD4CE250C87904091FF94585395BCA59F9FACB20E2866E0727C861C5F2C45AECECC412855E7B8A9342F0EFA7562FBA2D7927529ED92EF7825144F758A32752FA620CFB1E4061442E157386BECE969981438AC697D50F4BFD5824AA38B66D63BA921E5D4CFFE71DB72479571D5D3B1DAD7FEF4F0B0203010001";
+    public static final String PRIVATE_KEY = "30820278020100300D06092A864886F70D0101010500048202623082025E02010002818100CCD76686077243850EF52548BD4CE250C87904091FF94585395BCA59F9FACB20E2866E0727C861C5F2C45AECECC412855E7B8A9342F0EFA7562FBA2D7927529ED92EF7825144F758A32752FA620CFB1E4061442E157386BECE969981438AC697D50F4BFD5824AA38B66D63BA921E5D4CFFE71DB72479571D5D3B1DAD7FEF4F0B020301000102818100AA8E8F66F9BC424BFFF04E630A7B81D51196F1AD475A1E709719BE9ABC71FDC01BDD22B00287EE210BCA428B13790E92CDE0BFB96DFB7F102DCAFF91ED56B88ADBAC410EE29A9A80F8A4F728C70599AC3698BDDBFFC98D584E37F5F6A9490378EA51CEC4D021CE8F5677C32413536D91D1E82644D78A84FB8BB24EA7D14DB541024100FD72AD5DC1A4FD3C79E0EBD54C3E13BECB4011C7A91BF8A386B2289F44D5E1B53B2F9E6F4C65B9086D22F68D34A047CC72544125E604CDE3789B6BF0E6DD4277024100CEE76DA1EF78F54A0C0C44A075685D8CCB3D8CAD84AC76CA7F3FE27EFDC515D11599E705834064AAA6DC309F177FCE64BEB1560843F9ACE3CB1CD9827FF9490D024100D202D1572C1B6BDF4DDAAB705E31DE28ADC0943B0E8CE7F590AA55F0CB9832E3FA7C15DB81C194963FE0C5CDF1FA9223FDE484EB43735DAB8C87B4E4B4584937024100B43EEEC644FDC60A84E6671EB6497E3DFA8C9B324AC388152EB7F3D417B58B2503C1787DD7F2CFFFCEAF41F8469B83AD4666ED00F45EDD1BF14527C3C542E13D0240633C19D4C4767C1B2428F4730E509541CAEB725346B6BE1628752C2C5795084BFFD67D14C8B0C066256DB8B962289CE4BCA3F67C24599FD6255FC87D31097409";
 
 
     /**
@@ -34,7 +38,7 @@ public abstract class RSABase64Utils extends Coder {
      */
     public static String sign(byte[] data, String privateKey) throws Exception {
         // 解密由base64编码的私钥
-        byte[] keyBytes = decryptBASE64(privateKey);
+        byte[] keyBytes = HexUtils.hexStr2ByteArray(privateKey);
 
         // 构造PKCS8EncodedKeySpec对象
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -50,7 +54,7 @@ public abstract class RSABase64Utils extends Coder {
         signature.initSign(priKey);
         signature.update(data);
 
-        return encryptBASE64(signature.sign());
+        return HexUtils.byteArray2HexStr(signature.sign());
     }
 
     /**
@@ -65,7 +69,7 @@ public abstract class RSABase64Utils extends Coder {
     public static boolean verify(byte[] data, String publicKey, String sign) throws Exception {
 
         // 解密由base64编码的公钥
-        byte[] keyBytes = decryptBASE64(publicKey);
+        byte[] keyBytes = HexUtils.hexStr2ByteArray(publicKey);
 
         // 构造X509EncodedKeySpec对象
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
@@ -81,7 +85,7 @@ public abstract class RSABase64Utils extends Coder {
         signature.update(data);
 
         // 验证签名是否正常
-        return signature.verify(decryptBASE64(sign));
+        return signature.verify(HexUtils.hexStr2ByteArray(sign));
     }
 
     /**
@@ -95,7 +99,7 @@ public abstract class RSABase64Utils extends Coder {
      */
     public static byte[] decryptByPrivateKey(byte[] data, String key) throws Exception {
         // 对密钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = HexUtils.hexStr2ByteArray(key);
 
         // 取得私钥
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -120,7 +124,7 @@ public abstract class RSABase64Utils extends Coder {
      */
     public static byte[] decryptByPublicKey(byte[] data, String key) throws Exception {
         // 对密钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = HexUtils.hexStr2ByteArray(key);
 
         // 取得公钥
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
@@ -145,7 +149,7 @@ public abstract class RSABase64Utils extends Coder {
      */
     public static byte[] encryptByPublicKey(byte[] data, String key) throws Exception {
         // 对公钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = HexUtils.hexStr2ByteArray(key);
 
         // 取得公钥
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
@@ -170,7 +174,7 @@ public abstract class RSABase64Utils extends Coder {
      */
     public static byte[] encryptByPrivateKey(byte[] data, String key) throws Exception {
         // 对密钥解密
-        byte[] keyBytes = decryptBASE64(key);
+        byte[] keyBytes = HexUtils.hexStr2ByteArray(key);
 
         // 取得私钥
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -193,8 +197,7 @@ public abstract class RSABase64Utils extends Coder {
      */
     public static String getPrivateKey(Map<String, Object> keyMap) throws Exception {
         Key key = (Key) keyMap.get(PRIVATE_KEY);
-
-        return encryptBASE64(key.getEncoded());
+        return HexUtils.byteArray2HexStr(key.getEncoded());
     }
 
     /**
@@ -207,7 +210,7 @@ public abstract class RSABase64Utils extends Coder {
     public static String getPublicKey(Map<String, Object> keyMap) throws Exception {
         Key key = (Key) keyMap.get(PUBLIC_KEY);
 
-        return encryptBASE64(key.getEncoded());
+        return HexUtils.byteArray2HexStr(key.getEncoded());
     }
 
     /**
@@ -231,44 +234,26 @@ public abstract class RSABase64Utils extends Coder {
         // 私钥
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 
-        Map<String, Object> keyMap = new HashMap<String, Object>(2);
+        Map<String, Object> keyMap = new HashMap(2);
 
-        final String pub = encryptBASE64(publicKey.getEncoded());
+        final String pub = HexUtils.byteArray2HexStr(publicKey.getEncoded());
         System.out.println("Generated public key are the following string:\r\n" + pub);
-        System.out.println("Generated private key are the following string:\r\n" + encryptBASE64(privateKey.getEncoded()));
+        System.out.println("Generated private key are the following string:\r\n" + HexUtils.byteArray2HexStr(privateKey.getEncoded()));
 
         keyMap.put(PUBLIC_KEY, publicKey);
         keyMap.put(PRIVATE_KEY, privateKey);
         return keyMap;
     }
 
-    public static void main(String[] args) throws Exception {
-//        System.err.println("公钥加密——私钥解密测试");
-//        String inputStr = "中文没有问题";
-//        byte[] data = inputStr.getBytes("UTF-8");
-//        Map<String, Object> keyMap = RSABase64Utils.initKey("HCB-WJ-RSA-KEYS");
-//
-//        String publicKey = RSABase64Utils.getPublicKey(keyMap);
-//        String privateKey = RSABase64Utils.getPrivateKey(keyMap);
-//        byte[] encodedData = RSABase64Utils.encryptByPrivateKey(data, privateKey);
-//        String jiamiData = encryptBASE64(encodedData);
-//        byte[] decodedData = RSABase64Utils.decryptByPublicKey(encodedData, publicKey);
-//
-//        String outputStr = new String(decodedData);
-//        System.err.println("加密前: " + inputStr + "\n\r" + "加密后：" + jiamiData + "\n\r解密后: " + outputStr);
-
-//        String pubKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCe8mDmKPXeropIRxESf/azGKpiy0FUPoJjDVY6XyP29/O2NCnRgXMkfj5ufWAojcanUFpwsNXdkkdHR8taMNqw/ngIOEbBYzOPCG9ReWt5Y1Ew1EVnu2cJbJIeWfOK7d+8RQB7LMa8peiCmM8nsSQ0T/Zme2f/e83Vbg2YXCSNuwIDAQAB";
-//        String priKey = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAJ7yYOYo9d6uikhHERJ/9rMYqmLLQVQ+gmMNVjpfI/b387Y0KdGBcyR+Pm59YCiNxqdQWnCw1d2SR0dHy1ow2rD+eAg4RsFjM48Ib1F5a3ljUTDURWe7Zwlskh5Z84rt37xFAHssxryl6IKYzyexJDRP9mZ7Z/97zdVuDZhcJI27AgMBAAECgYEAklF5libav9VZAtQ5CRi3V4M7RprpVs38ZYaffDic+PqkZXR7kptiDZQRkNDlti9dUiSMPPTsy32fFCUpM6uJhK52GRQ3bmvSFk0uaF3I8UWg4kwhhUytKB0YpF2n6cvW65XqNNogGUHIxZUuK/RwGCi6czM8bg1LY6Vd1TDwceECQQD3YwObOLwhZ1oPmCbwQ11Kb2ImYOcwDF3pw5XtsupmWbom2psCa3r0MFO3uec2w8ovkCbMZ+bC64FgypzWIRIzAkEApHsWyDc6of3lUcK7cdJBFo5ZkU1Dipr8qvQ1G6ujPNipifr0kw+RFl7/4V02whsKxoXr2GIExXAv8kSPBK/eWQJBAKTKiDR17pwxxIRuzkFuHk7fM3ptQpN3KXf2mYDllc7oJmCLboaGIjlXl+zjIWoRsjVMyQuQit99EYnwbdkV3pECQAdjgCJ+WKPuQ97oYIM8brAUtPFSBzayv6buUXRswWh6UyNfopz4lgvrOJNnHI6bqGBCo9WUkaJM59p6OfJ79AECQEvaBGnICSlCC8k/awXg4AxMN9eqchBP6Nm4OK3PRGi5Dv56DAMiuVgUddPVJz0BCDYH90LaYQFPQxVDofDCOtI=";
-////             String a = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCeOAxaEi3BfMuFKX5exN4LodhNvjwRuKw4WqQBw0hcT8NWX9EQvnIwu1wI5IvKqrg59AAdR+lh4N1vjwp6IEwaxLcXvuLEOsOZRsfSlwuOvDAXd2FBMRM5bICwYCwo94p7gUkH1qfl6bE7lATs6veeo16wn9WX5TnAGAMyVMWCBQIDAQAB";
-//        final byte[] bytes = encryptByPublicKey("中文｛｝：“。、？》》？》？。aaaaasdfoi0asdfplj'asdfm,l'mvcxzxcvm'lkzxjcvlkxkjcv".getBytes("UTF-8"), pubKey);
-//        final String chiper = encryptBASE64(bytes);
-//        System.out.println(chiper);
-//        final byte[] bytes1 = decryptByPrivateKey(decryptBASE64(chiper), priKey);
-//        System.out.println(new String(bytes1, "UTF-8"));
-
+    public static String encryptByPublic(String raw, String publicKey) throws Exception {
+        return HexUtils.byteArray2HexStr(encryptByPublicKey(raw.getBytes(SYSTEM_CHARSET), publicKey));
     }
 
-    public static void generate(String seed) {
+    public static String decryptByPrivate(String chiper, String privateKey) throws Exception {
+        return new String(decryptByPrivateKey(HexUtils.hexStr2ByteArray(chiper), privateKey), SYSTEM_CHARSET);
+    }
+
+    public static void generateKeys(String seed) {
         try {
             KeyPairGenerator e = KeyPairGenerator.getInstance("RSA");
             SecureRandom secureRandom = new SecureRandom();
@@ -277,11 +262,12 @@ public abstract class RSABase64Utils extends Coder {
             KeyPair keys = e.genKeyPair();
             PublicKey publicKey = keys.getPublic();
             PrivateKey privateKey = keys.getPrivate();
-            System.out.println("Generated public key are the following string:\r\n" + encryptBASE64(publicKey.getEncoded()));
-            System.out.println("Generated private key are the following string:\r\n" + encryptBASE64(privateKey.getEncoded()));
+            System.out.println("Generated public key are the following string:\r\n" + HexUtils.byteArray2HexStr(publicKey.getEncoded()));
+            System.out.println("Generated private key are the following string:\r\n" + HexUtils.byteArray2HexStr(privateKey.getEncoded()));
         } catch (Exception var6) {
             var6.printStackTrace();
             System.out.println("Failed...");
         }
+
     }
 }

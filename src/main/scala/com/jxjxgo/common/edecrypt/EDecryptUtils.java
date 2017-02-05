@@ -1,6 +1,6 @@
-package com.lawsofnature.common.edecrypt;
+package com.jxjxgo.common.edecrypt;
 
-import com.lawsofnature.common.edecrypt.rsa.RSAHexUtils;
+import com.jxjxgo.common.edecrypt.rsa.RSAHexUtils;
 
 /**
  * Created by fangzhongwei on 2016/11/14.

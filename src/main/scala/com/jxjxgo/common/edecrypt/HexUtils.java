@@ -1,4 +1,4 @@
-package com.lawsofnature.common.edecrypt;
+package com.jxjxgo.common.edecrypt;
 
 import java.io.UnsupportedEncodingException;
 
