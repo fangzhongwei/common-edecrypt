@@ -1,8 +1,8 @@
 name := "common-edecrypt"
 
-version := "1.0"
+version := "1.1"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.1"
 
 organization := "com.jxjxgo.common"
 
