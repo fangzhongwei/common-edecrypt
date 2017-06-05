@@ -14,21 +14,6 @@ public class AESUtils {
      */
     private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
 
-    public static void main(String[] args) throws Exception {
-        String content = "我爱你";
-        System.out.println("加密前：" + content);
-
-        final String KEY = "abcdefgabcdefg12";
-
-        System.out.println("加密密钥和解密密钥：" + KEY);
-
-        String encrypt = aesEncrypt(content, KEY);
-        System.out.println("加密后：" + encrypt);
-
-        String decrypt = aesDecrypt("8367e105a54da22f79d3a6b47136ba56", KEY);
-        System.out.println("解密后：" + decrypt);
-    }
-
     /**
      * hex encode
      *
